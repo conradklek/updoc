@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>updoc</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="app" />
+		<link rel="icon" type="image/png" href="images/favicon.png">
+		<link rel="manifest" href="appmanifest.json">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="theme-color" content="#e2e8f0" />
+		<link rel="apple-touch-icon" sizes="192x192" href="./images/icon-192.png" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="application-name" content="app" />
+		<meta name="msapplication-TileImage" content="./images/icon-144.png" />
+		<meta name="msapplication-TileColor" content="#f1f5f9" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		%sveltekit.head%
+	</head>
+	<body>
+		%sveltekit.body%
+		<script> if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js") </script>
+	</body>
+</html>

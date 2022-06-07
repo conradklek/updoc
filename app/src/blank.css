@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply fixed top-0 left-0 bg-slate-200 overflow-hidden;
+}
+article.prose {
+    @apply w-screen h-screen relative overflow-x-hidden overflow-y-auto prose-slate;
+    max-width: 100vw;
+}

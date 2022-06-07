@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply grid w-screen h-screen fixed top-0 left-0 bg-slate-200;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas: "nav aside header" "nav aside main" "footer footer footer";
+}
+header {
+    grid-area: header;
+    @apply w-full h-10 flex flex-row items-end justify-start px-1;
+}
+header > button { @apply flex flex-row items-center justify-start h-6 pr-1 text-sm font-semibold outline-none rounded-sm whitespace-nowrap; }
+header > button:last-of-type { @apply text-blue-500; }
+header > button:focus { @apply bg-blue-500/75; }
+header > button > span { @apply w-6 h-6 aspect-square grid place-items-center; }
+header > button > span > svg { @apply h-3 fill-black pointer-events-none; }
+
+nav {
+    grid-area: nav;
+    @apply w-12 h-full pb-1 pt-3 flex flex-col items-start justify-start;
+}
+nav > div { @apply w-full h-10 pr-3 grid items-center justify-end; }
+nav > div > button { @apply w-6 h-6 grid place-items-center text-black; }
+nav > div > button[disabled] { @apply text-slate-400; }
+nav > div:last-of-type { @apply mt-auto; }
+nav > div > button > svg { @apply h-4 fill-current; }
+
+aside {
+    grid-area: aside;
+    @apply w-56 h-screen;
+}
+main {
+    grid-area: main;
+    @apply w-full h-full relative grid place-items-center overflow-auto bg-slate-200 p-2 rounded-sm;
+}
+footer {
+    grid-area: footer;
+    @apply w-full h-0;
+}
+aside > ol { @apply pt-5; }
+aside > ol li > ol { @apply pl-6; }
+aside > ol li > div {
+    @apply grid w-full h-6 relative cursor-grab;
+    grid-template-rows: 1fr;
+    grid-template-columns: auto auto auto 1fr;
+}
+aside > ol li > div:active { @apply cursor-grabbing; }
+aside > ol li > div > span { @apply w-6 h-6 grid place-items-center text-black; }
+aside > ol li > div > span > svg { @apply h-4 fill-current; }
+aside > ol li > div > span > button { @apply w-6 h-6 aspect-square grid place-items-center text-black; }
+aside > ol li > div > span > button > svg { @apply h-4 fill-current; }
+aside > ol li > div > .link { @apply h-6 px-1 flex flex-row items-center justify-start text-black font-medium whitespace-nowrap; }
+aside > ol li > div:hover > .link,
+aside > ol li > div:hover > span { @apply text-slate-400; }
+aside > ol li > div.view > .link,
+aside > ol li > div.view > span { @apply text-blue-500; }
+aside > ol li > div.view > span > svg { @apply fill-blue-500; }
+aside > ol li > div.each > .link,
+aside > ol li > div.each > span { @apply text-slate-500; }
+aside > ol li > div.each > span > svg { @apply fill-slate-500; }
+aside > ol li > div.drag > .link,
+aside > ol li > div.drag > span { @apply text-slate-300; }
+aside > ol li > div.drag > span > svg { @apply fill-slate-300; }
+aside > ol li > div.over > .link,
+aside > ol li > div.over > span { @apply text-blue-500; }
+aside > ol li > div.over > span > svg { @apply fill-blue-500; }
+aside > ol span.menu > ul { @apply w-32 absolute top-6 left-1 z-50 flex flex-col items-start justify-start cursor-pointer bg-slate-400 shadow-lg shadow-slate-900/25 rounded overflow-hidden; }
+aside > ol span.menu > ul > li { @apply w-full flex flex-row items-center justify-start; }
+aside > ol span.menu > ul > li > button { @apply w-full h-6 flex items-center justify-start text-sm font-semibold whitespace-nowrap px-1 text-black; }
+aside > ol span.menu > ul > li > button:hover { @apply bg-slate-500; }
+
+main > div { @apply w-full h-full; }
+.cm-editor { @apply w-full h-full; }
+.cm-editor.cm-focused.ͼ1 { @apply outline-none; }
+.cm-line {
+    @apply bg-transparent text-sm;
+    font-family: "JetBrains Mono", monospace;
+}
+.cm-cursor.cm-cursor-primary { }
+.cm-editor { }
+.ͼ2 .cm-activeLine { @apply bg-transparent; }
+.ͼ2 .cm-focused .cm-activeLine { @apply bg-transparent; }
+.ͼ2 .cm-gutters {
+    @apply bg-transparent border-transparent bg-slate-200 text-slate-300/50 text-sm hidden;
+    font-family: "JetBrains Mono", monospace;
+}
+.cm-gutterElement span {
+    @apply font-extrabold font-mono;
+}
+.ͼ2 .cm-activeLineGutter { @apply bg-transparent text-slate-400; }
+
+#view {
+    @apply w-screen h-screen fixed top-0 left-0;
+}
