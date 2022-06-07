@@ -1,2 +1,4 @@
-⚠️ coming soon!
 ![hero](app/static/hero.png)
+
+---
+⚠️ coming soon!
