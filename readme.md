@@ -1,0 +1,1 @@
+![hero](app/static/hero.png)
