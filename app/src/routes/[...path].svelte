@@ -10,7 +10,7 @@
 </script>
 <script>
     export let path = []
-    import "../blank.css"
+    import "../app.css"
     import { onMount } from "svelte"
     import { app } from "$lib/stores"
     import Markdoc from "@markdoc/markdoc"
@@ -145,6 +145,6 @@
         }
     }, 100)
 </script>
-<article id=page bind:this={page} class="prose prose-slate" on:click={() => page = page} on:keydown={() => page = page} on:keyup={() => page = page}>
+<article id=page bind:this={page} class="prose prose-slate prose-sm" on:click={() => page = page} on:keydown={() => page = page} on:keyup={() => page = page}>
     {@html html.slice(9, -10)}
 </article>

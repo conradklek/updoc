@@ -2,8 +2,7 @@
     import { app } from "$lib/stores"
     import { clickOutside } from "./actions"
     import { createEventDispatcher } from "svelte"
-    import { Book, Code, icons } from "$lib/components"
-
+    import { Book, icons } from "$lib/components"
     const dispatch = createEventDispatcher()
     $app[0].open = true
     let flat = (data, list = [], path = []) => {
@@ -16,7 +15,6 @@
         return list
     }
     $: data = $app && $app[0] ? flat($app) : null
-    $: view = data.find(i => i.view)
     $: each = []
     let open = (e, item) => {
         if (e.shiftKey && each.length) {
@@ -160,19 +158,6 @@
         item.menu = !item.menu
         $app = $app
     }
-    let save = () => {
-        let loop = (data, copy = []) => {
-            for (let item of data) {
-                if (item.kind === "file") copy.push({ name: item.name, kind: item.kind, data: item.data, path: item.path, view: item.view || false })
-                else copy.push({ name: item.name, kind: item.kind, data: loop(item.data), path: item.path, open: item.open || false })
-            }
-            return copy
-        }
-        let data = loop($app[0].data)
-        app.patch($app[0].id, { data })
-        $app.save = false
-        $app = $app
-    }
     let edit = (verb, item) => {
         console.log(verb, item)
         switch (verb) {
@@ -226,84 +211,47 @@
     }
 </script>
 
-<header>
-    {#if view}
-    {#each view.path as item}
-    <button>
-        <span>
-            {@html icons["caret-right"]}
-        </span>
-        {item}
-    </button>
-    {/each}
-    {/if}
-</header>
-
-<nav>
-    <div><button>{@html icons["find"]}</button></div>
-    <div><button disabled={!$app.save} on:click={save}>{@html icons["floppy-disk"]}</button></div>
-    <div><button>{@html icons["gear"]}</button></div>
-</nav>
-
-<aside>
-    <Book data={$app} let:item>
-        <div 
-            class:view={item.view} 
-            class:each={each.length > 1 && each.includes(item)}
-            class:drag={item.drag}
-            class:over={item.over}
-            draggable={true}
-            on:dragstart={() => drag(item)}
-            on:dragover|preventDefault={() => over(item)}
-            on:dragleave|preventDefault={() => exit(item)}
-            on:dragend={() => stop()}
-            on:drop|preventDefault={(e) => drop(e, item)}>
-            <span class=menu>
-                {#if each.length <= 1}
-                <button on:click|preventDefault={() => menu(item)}>
-                    {@html item.menu ? icons["xmark"] : icons["ellipsis"]}
-                </button>
-                    {#if item.menu}
-                    <ul use:clickOutside on:clickOutside={() => {
-                        item.menu = false
-                        $app = $app
-                    }}>
-                        {#if item.kind === "directory"}
-                        <li><button on:click={() => edit("Create Folder", item)}>Create Folder</button></li>
-                        <li><button on:click={() => edit("Create File", item)}>Create File</button></li>
-                        {/if}
-                        {#if item.path.length > 1} 
-                        <li><button on:click={() => edit("Rename", item)}>Rename</button></li>
-                        <li><button on:click={() => edit("Delete", item)}>Delete</button></li>
-                        {/if}
-                    </ul>
+<Book data={$app} let:item>
+    <div 
+        class:view={item.view} 
+        class:each={each.length > 1 && each.includes(item)}
+        class:drag={item.drag}
+        class:over={item.over}
+        draggable={true}
+        on:dragstart={() => drag(item)}
+        on:dragover|preventDefault={() => over(item)}
+        on:dragleave|preventDefault={() => exit(item)}
+        on:dragend={() => stop()}
+        on:drop|preventDefault={(e) => drop(e, item)}>
+        <span class=menu>
+            {#if each.length <= 1}
+            <button on:click|preventDefault={() => menu(item)}>
+                {@html item.menu ? icons["xmark"] : icons["ellipsis"]}
+            </button>
+                {#if item.menu}
+                <ul use:clickOutside on:clickOutside={() => {
+                    item.menu = false
+                    $app = $app
+                }}>
+                    {#if item.kind === "directory"}
+                    <li><button on:click={() => edit("Create Folder", item)}>Create Folder</button></li>
+                    <li><button on:click={() => edit("Create File", item)}>Create File</button></li>
                     {/if}
+                    {#if item.path.length > 1} 
+                    <li><button on:click={() => edit("Rename", item)}>Rename</button></li>
+                    <li><button on:click={() => edit("Delete", item)}>Delete</button></li>
+                    {/if}
+                </ul>
                 {/if}
-            </span>
-            <span>
-                {@html item.kind === "directory" ? item.open && !item.drag ? icons["folder-open"] : icons["folder"] : icons["file"]}
-            </span>
-
-            {#if item.kind === "file" && item.name.endsWith(".md") && !item.name.startsWith("_")}
-            <a class=link href={item.path.join("/").slice(0, -3)} on:click|preventDefault={(e) => open(e, item)}>{item.name}</a>
-            {:else}
-            <button class=link on:click|preventDefault={(e) => open(e, item)}>{item.name}</button>
             {/if}
-
-        </div>
-    </Book>
-</aside>
-{#if $app[0]}
-<main>
-    {#each data.filter(i => i.name.endsWith(".md") 
-    || i.name.endsWith(".html") 
-    || i.name.endsWith(".css") 
-    || i.name.endsWith(".js") 
-    || i.name.endsWith(".json")) as item (item.path.join("/"))}
-    {#if !item.sync}
-    <Code {item} on:code={() => dispatch("code", item)}/>
-    {/if}
-    {/each}
-</main>
-{/if}
-<footer />
+        </span>
+        <span>
+            {@html item.kind === "directory" ? item.open && !item.drag ? icons["folder-open"] : icons["folder"] : icons["file"]}
+        </span>
+        {#if item.kind === "file" && item.name.endsWith(".md") && !item.name.startsWith("_")}
+        <a class=link href={item.path.join("/").slice(0, -3)} on:click|preventDefault={(e) => open(e, item)}>{item.name}</a>
+        {:else}
+        <button class=link on:click|preventDefault={(e) => open(e, item)}>{item.name}</button>
+        {/if}
+    </div>
+</Book>

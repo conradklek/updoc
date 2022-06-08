@@ -29,7 +29,7 @@
             parent: node,
             state: EditorState.create({ 
                     doc: item.data, 
-                    extensions: [ basicSetup, lang, /*EditorView.lineWrapping,*/ keymap.of([indentWithTab]),
+                    extensions: [ basicSetup, lang, EditorView.lineWrapping, keymap.of([indentWithTab]),
                     EditorView.updateListener.of((v) => {
                         if (v.docChanged) {
                             item.data = v.state.doc.toString()
