@@ -58,7 +58,7 @@
 
 <style lang="postcss">
     main#auth {
-        @apply flex flex-row items-start justify-center gap-6 pt-4 bg-slate-200 py-12;
+        @apply flex flex-row items-start justify-center gap-6 pt-4 bg-slate-100 py-12;
     }
     main#auth > form {
         @apply inline-flex flex-col items-start justify-start w-44;
@@ -92,7 +92,7 @@
         @apply outline outline-2 outline-blue-600 outline-offset-0;
     }
     main#auth > form > button {
-        @apply block ml-auto mt-4 px-3 py-1 bg-slate-100 font-semibold rounded-sm transition-colors duration-200;
+        @apply block ml-auto mt-4 px-3 py-1 bg-slate-200 font-semibold rounded-sm transition-colors duration-200;
     }
     main#auth > form > button:focus {
         @apply bg-slate-50;

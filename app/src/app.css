@@ -9,46 +9,49 @@ body {
     @apply w-full h-full overflow-auto;
 }
 #head {
-    @apply w-full h-full flex flex-row items-center justify-start gap-1 pl-4 pr-1.5 bg-slate-100 text-slate-900;
+    @apply w-full h-full flex flex-row items-center justify-start gap-1 pl-3 pr-1.5 bg-slate-100 text-slate-800;
 }
 #head label {
     @apply flex flex-row items-center justify-start mr-auto;
 }
 #head label span {
-    @apply grid place-items-center h-full px-1.5;
+    @apply grid place-items-center h-full px-0.5;
 }
 #head label span svg {
-    @apply w-3.5 fill-slate-800;
+    @apply h-3.5 fill-slate-900;
 }
 #head label input {
-    @apply h-full mx-1 bg-transparent font-semibold outline-none;
+    @apply h-full mx-1.5 bg-transparent text-slate-900 font-semibold outline-none;
 }
 #head label input::placeholder {
-    @apply text-slate-800;
+    @apply text-slate-900;
 }
 #head label input:focus::placeholder {
     @apply text-transparent;
 }
 #head button {
-    @apply flex flex-row items-center justify-start ml-2 text-sm font-semibold;
+    @apply flex flex-row items-center justify-start text-sm font-semibold;
+}
+#head button:first-of-type svg {
+    @apply h-4 fill-blue-600;
+}
+#head button:last-of-type {
+    @apply ml-2;
 }
 #head button[disabled] {
     @apply cursor-not-allowed;
 }
 #head button[disabled] svg {
-    @apply fill-slate-300;
+    @apply fill-slate-400/50;
 }
 #head button span {
     @apply grid place-items-center h-full px-1.5;
 }
-#head button:first-of-type span svg {
-    @apply w-3.5;
-}
 #head button span svg {
-    @apply w-4 fill-slate-800;
+    @apply w-4 fill-slate-900;
 }
-#book { @apply w-full h-full; }
-#book > ol { @apply pl-4 pt-3; }
+#book { @apply w-full h-full text-slate-900; }
+#book > ol { @apply pl-3.5 pt-3; }
 #book > ol li > ol { @apply pl-6; }
 #book > ol li > div {
     @apply grid w-full h-6 relative cursor-grab;
@@ -56,16 +59,16 @@ body {
     grid-template-columns: auto auto auto 1fr;
 }
 #book > ol li > div:active { @apply cursor-grabbing; }
-#book > ol li > div > span { @apply w-6 h-6 grid place-items-center text-black; }
-#book > ol li > div > span > svg { @apply h-4 fill-current; }
-#book > ol li > div > span > button { @apply w-6 h-6 aspect-square grid place-items-center text-black; }
+#book > ol li > div > span { @apply w-6 h-6 grid place-items-center text-slate-800; }
+#book > ol li > div > span > svg { @apply h-4 fill-slate-800; }
+#book > ol li > div > span > button { @apply w-6 h-6 aspect-square grid place-items-center text-slate-800; }
 #book > ol li > div > span > button > svg { @apply h-4 fill-current; }
-#book > ol li > div > .link { @apply h-6 px-1 flex flex-row items-center justify-start text-black font-medium whitespace-nowrap; }
+#book > ol li > div > .link { @apply h-6 px-1 flex flex-row items-center justify-start text-slate-800 font-medium whitespace-nowrap; }
 #book > ol li > div:hover > .link,
 #book > ol li > div:hover > span { @apply text-slate-400; }
 #book > ol li > div.view > .link,
-#book > ol li > div.view > span { @apply text-blue-500; }
-#book > ol li > div.view > span > svg { @apply fill-blue-500; }
+#book > ol li > div.view > span { @apply text-blue-600; }
+#book > ol li > div.view > span > svg { @apply fill-blue-600; }
 #book > ol li > div.each > .link,
 #book > ol li > div.each > span { @apply text-slate-500; }
 #book > ol li > div.each > span > svg { @apply fill-slate-500; }
@@ -81,14 +84,14 @@ body {
 #book > ol span.menu > ul > li > button:hover { @apply bg-slate-500; }
 
 #code {
-    @apply w-full h-full relative px-0.5 py-1 bg-slate-100;
+    @apply w-full h-full relative px-0.5 py-1 bg-slate-100 overflow-auto;
 }
 #code .cm-editor { @apply w-full h-full; }
 #code .cm-editor.cm-focused.ͼ1 { @apply outline-none; }
 #code .cm-line {
-    @apply bg-transparent rounded-tr-sm rounded-br-sm text-slate-800;
+    @apply bg-transparent rounded-tr-sm rounded-br-sm text-slate-900;
     font-family: "JetBrains Mono", monospace;
-    font-weight: 500;
+    font-weight: 600;
     font-size: .8rem;
 }
 #code .cm-cursor.cm-cursor-primary { }
@@ -96,13 +99,13 @@ body {
 #code .ͼ2 .cm-activeLine { @apply bg-transparent; }
 #code .ͼ2 .cm-focused .cm-activeLine { @apply bg-transparent; }
 #code .ͼ2 .cm-gutters {
-    @apply bg-transparent border-none text-slate-300;
+    @apply px-2 bg-slate-100 border-none text-slate-300;
     font-family: "JetBrains Mono", monospace;
-    font-weight: 500;
+    font-weight: 600;
     font-size: .8rem;
 }
 #code .cm-gutterElement span { @apply font-extrabold font-mono; }
-#code .ͼ2 .cm-activeLineGutter { @apply bg-transparent text-slate-300; }
+#code .ͼ2 .cm-activeLineGutter { @apply bg-slate-100 text-slate-300; }
 
 
 #view {
@@ -132,9 +135,11 @@ body > .splitpanes.no-splitter:hover .splitpanes__splitter::before,
 body > .splitpanes.no-splitter:hover .splitpanes__splitter::after {
     @apply h-4 bg-transparent;
 }
-body > .splitpanes.no-splitter .splitpanes--vertical .splitpanes__splitter {
+body > .splitpanes .splitpanes--vertical .splitpanes__splitter,
+body > .splitpanes.splitpanes--vertical .splitpanes__splitter {
     @apply w-1;
 }
-body > .splitpanes.no-splitter.splitpanes--horizontal > .splitpanes__splitter {
+body > .splitpanes.splitpanes--horizontal > .splitpanes__splitter,
+body > .splitpanes .splitpanes--horizontal > .splitpanes__splitter {
     @apply h-1;
 }

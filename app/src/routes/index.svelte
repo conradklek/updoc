@@ -1,5 +1,7 @@
+<svelte:window bind:innerWidth={innerWidth} />
 <script>
     import "../app.css"
+    import { onMount } from "svelte" 
     import { app } from "$lib/stores"
     import { Pane, Splitpanes } from "svelte-splitpanes"
     import { Auth, Data, Code, icons } from "$lib/components"
@@ -17,7 +19,7 @@
     let save = () => {
         let loop = (data, copy = []) => {
             for (let item of data) {
-                if (item.kind === "file") copy.push({ name: item.name, kind: item.kind, data: item.data, path: item.path, view: item.view || false })
+                if (item.kind === "file") copy.push({ name: item.name, kind: item.kind, data: item.data, path: item.path })
                 else copy.push({ name: item.name, kind: item.kind, data: loop(item.data), path: item.path, open: item.open || false })
             }
             return copy
@@ -32,40 +34,44 @@
         let { type } = e.data
         if (type === "init" && $app[0]) chan.postMessage({ type: "load", data: $app })
     }
+    $: innerWidth = 0
+    onMount(() => {
+        if (data?.find(i => i.view)) view.src = data.find(i => i.view).path.join("/").slice(0, -3)
+    })
 </script>
 
 {#if $app[0]}
 <Splitpanes theme="no-splitter" horizontal dblClickSplitter={false}>
 	<Pane size="10" minSize="10" maxSize="10">
 		<div id=head>
+            <button disabled={!$app.save} on:click={save}>
+                <span>
+                    {@html icons["floppy-disk"]}
+                </span>
+            </button>
             <label for=find>
                 <span>
                     {@html icons["find"]}
                 </span>
                 <input name=find id=find type=text placeholder="Search..." />
             </label>
-            <button disabled={!$app.save} on:click={save}>
-                <span>
-                    {@html icons["floppy-disk"]}
-                </span>
-            </button>
             <button>
                 <span>
                     {@html icons["gear"]}
                 </span>
             </button>
+            <button>
+                <span>
+                    {@html icons["earth"]}
+                </span>
+            </button>
         </div>
     </Pane>
 	<Pane>
-		<Splitpanes>
+		<Splitpanes horizontal={innerWidth < 568 ? true : false}>
 			<Pane>
 				<div id=book>
-                    <Data on:view={(e) => { 
-                        console.clear()
-                        console.log(e.detail)
-                        console.log(view)
-                        if (view && data) view.src = "/" + e.detail.path.join("/").slice(0, -3)
-                    }} />
+                    <Data on:view={(e) => { if (view && data) view.src = "/" + e.detail.path.join("/").slice(0, -3) }} />
                 </div>
             </Pane>
 			<Pane>
