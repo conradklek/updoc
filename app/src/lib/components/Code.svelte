@@ -25,22 +25,58 @@
             case "md": lang = markdown();   break
             default: break
         }
-        code = new EditorView({
-            parent: node,
-            state: EditorState.create({ 
-                    doc: item.data, 
-                    extensions: [ basicSetup, lang, /*EditorView.lineWrapping,*/ keymap.of([indentWithTab]),
-                    EditorView.updateListener.of((v) => {
-                        if (v.docChanged) {
-                            item.data = v.state.doc.toString()
-                            $app.save = true
-                            $app = $app
-                            dispatch("code")
-                        }
-                    })
-                ]
+        if (item.name.split(".").at(-1) === "md") { 
+            code = new EditorView({
+                parent: node,
+                state: EditorState.create({ 
+                        doc: item.data, 
+                        extensions: [ basicSetup, lang, EditorView.lineWrapping, keymap.of([indentWithTab]),
+                        EditorView.updateListener.of((v) => {
+                            if (v.docChanged) {
+                                item.data = v.state.doc.toString()
+                                $app.save = true
+                                $app = $app
+                                dispatch("code")
+                            }
+                        })
+                    ]
+                })
             })
-        })
+        } else if (lang) {
+            code = new EditorView({
+                parent: node,
+                state: EditorState.create({ 
+                        doc: item.data, 
+                        extensions: [ basicSetup, lang, keymap.of([indentWithTab]),
+                        EditorView.updateListener.of((v) => {
+                            if (v.docChanged) {
+                                item.data = v.state.doc.toString()
+                                $app.save = true
+                                $app = $app
+                                dispatch("code")
+                            }
+                        })
+                    ]
+                })
+            })
+        } else if (item.name.split(".").at(-1) === "txt") {
+            code = new EditorView({
+                parent: node,
+                state: EditorState.create({ 
+                        doc: item.data, 
+                        extensions: [ basicSetup, EditorView.lineWrapping, keymap.of([indentWithTab]),
+                        EditorView.updateListener.of((v) => {
+                            if (v.docChanged) {
+                                item.data = v.state.doc.toString()
+                                $app.save = true
+                                $app = $app
+                                dispatch("code")
+                            }
+                        })
+                    ]
+                })
+            })
+        }
         $app = $app
     })
 </script>

@@ -58,7 +58,7 @@
 
 <style lang="postcss">
     main#auth {
-        @apply flex flex-row items-start justify-center gap-6 pt-4 bg-slate-100 py-12;
+        @apply flex flex-row items-start justify-center gap-6 pt-4 py-12;
     }
     main#auth > form {
         @apply inline-flex flex-col items-start justify-start w-44;

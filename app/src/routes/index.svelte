@@ -76,7 +76,7 @@
             </Pane>
 			<Pane>
 				<div id=code>
-                    {#each data.filter(i => i.name.endsWith(".md") || i.name.endsWith(".html") || i.name.endsWith(".css") || i.name.endsWith(".js") || i.name.endsWith(".json")) as item (item.path.join("/"))}
+                    {#each data.filter(i => i.name.endsWith(".md") || i.name.endsWith(".html") || i.name.endsWith(".css") || i.name.endsWith(".js") || i.name.endsWith(".json") || i.name.endsWith(".txt")) as item (item.path.join("/"))}
                     <Code {item} on:code={() => { chan.postMessage({ type: "load", data: $app })}} />
                     {/each}
                 </div>
