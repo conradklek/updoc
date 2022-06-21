@@ -1,8 +1,8 @@
 <svelte:window bind:innerWidth={innerWidth} />
 <script>
     import "../app.css"
-    import { onMount } from "svelte" 
-    import { app } from "$lib/stores"
+    import { onMount } from "svelte"
+    import { app } from "$lib/stores" 
     import { Pane, Splitpanes } from "svelte-splitpanes"
     import { Auth, Data, Code, icons } from "$lib/components"
     let flat = (data, list = [], path = []) => {
@@ -41,20 +41,14 @@
 </script>
 
 {#if $app[0]}
-<Splitpanes theme="no-splitter" horizontal dblClickSplitter={false}>
-	<Pane size="10" minSize="10" maxSize="10">
-		<div id=head>
+<main id=root>
+    <header>
+        <div id=head>
             <button disabled={!$app.save} on:click={save}>
                 <span>
                     {@html icons["floppy-disk"]}
                 </span>
             </button>
-            <label for=find>
-                <span>
-                    {@html icons["find"]}
-                </span>
-                <input name=find id=find type=text placeholder="Search..." />
-            </label>
             <button>
                 <span>
                     {@html icons["gear"]}
@@ -66,29 +60,31 @@
                 </span>
             </button>
         </div>
-    </Pane>
-	<Pane>
-		<Splitpanes horizontal={innerWidth < 568 ? true : false}>
-			<Pane>
-				<div id=book>
+    </header>
+    <article>
+        <Splitpanes>
+            <Pane size={10}>
+                <div id=book>
                     <Data on:view={(e) => { if (view && data) view.src = "/" + e.detail.path.join("/").slice(0, -3) }} />
                 </div>
             </Pane>
-			<Pane>
-				<div id=code>
-                    {#each data.filter(i => i.name.endsWith(".md") || i.name.endsWith(".html") || i.name.endsWith(".css") || i.name.endsWith(".js") || i.name.endsWith(".json") || i.name.endsWith(".txt")) as item (item.path.join("/"))}
-                    <Code {item} on:code={() => { chan.postMessage({ type: "load", data: $app })}} />
-                    {/each}
-                </div>
+            <Pane>
+                <Splitpanes horizontal={innerWidth < 568 ? true : false}>
+                    <Pane>
+                        <div id=code>
+                            {#each data.filter(i => i.name.endsWith(".md") || i.name.endsWith(".html") || i.name.endsWith(".css") || i.name.endsWith(".js") || i.name.endsWith(".json") || i.name.endsWith(".txt")) as item (item.path.join("/"))}
+                            <Code {item} on:code={() => { chan.postMessage({ type: "load", data: $app })}} />
+                            {/each}
+                        </div>
+                    </Pane>
+                    <Pane>
+                        <iframe title=page id=page bind:this={view} />
+                    </Pane>
+                </Splitpanes>
             </Pane>
-			<Pane>
-				<div id=view>
-                    <iframe title=view bind:this={view} />
-                </div>
-            </Pane>
-		</Splitpanes>
-	</Pane>
-</Splitpanes>
+        </Splitpanes>
+    </article>
+</main>
 {:else}
-    <Auth />
+<Auth />
 {/if}

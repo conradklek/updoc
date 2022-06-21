@@ -1,54 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-    @apply w-full min-h-screen bg-slate-100;
-}
-#page {
-    @apply w-full h-full overflow-auto p-4;
-}
-#head {
-    @apply w-full h-full flex flex-row items-center justify-start gap-1 pl-3 pr-1.5;
-}
-#head label {
-    @apply flex flex-row items-center justify-start mr-auto;
-}
-#head label span {
-    @apply grid place-items-center h-full px-0.5;
-}
-#head label span svg {
-    @apply h-3.5 fill-slate-900;
-}
-#head label input {
-    @apply h-full mx-1.5 bg-transparent text-slate-900 font-semibold outline-none;
-}
-#head label input::placeholder {
-    @apply text-slate-900;
-}
-#head label input:focus::placeholder {
-    @apply text-transparent;
-}
-#head button {
-    @apply flex flex-row items-center justify-start text-sm font-semibold;
-}
-#head button:first-of-type svg {
-    @apply h-4 fill-blue-600;
-}
-#head button:last-of-type {
-    @apply ml-2;
-}
-#head button[disabled] {
-    @apply cursor-not-allowed;
-}
-#head button[disabled] svg {
-    @apply fill-slate-400/50;
-}
-#head button span {
-    @apply grid place-items-center h-full px-1.5;
-}
-#head button span svg {
-    @apply w-4 fill-slate-900;
+    @apply w-screen h-screen p-5;
+    &:has(main#root) {
+        @apply w-screen h-screen p-0 fixed top-0 left-0 overflow-hidden;
+    }
+    > main {
+        @apply grid w-full h-full;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: "header" "article";
+        > header {
+            @apply w-full h-12 flex flex-row items-center justify-start;
+            grid-area: header;
+        }
+        > article {
+            @apply w-full h-full bg-blue-500/50;
+            grid-area: article;
+            div.splitpanes.default-theme {
+                @apply w-full h-full;
+                div.splitpanes__pane {
+                    @apply grid bg-slate-100;
+                    grid-template-rows: 1fr;
+                    grid-template-columns: 1fr;
+                }
+                div.splitpanes__splitter {
+                    @apply border-none bg-white flex flex-row items-center justify-center;
+                    &:hover::before, &:hover::after, &::before, &::after {
+                        @apply bg-transparent border-none;
+                    }
+                }
+            }
+            #code {
+                @apply grid w-full h-full overflow-auto;
+                grid-template-rows: 1fr;
+                grid-template-columns: 1fr;
+                .cm-editor.ͼ1.ͼ2.ͼ4 {
+                    @apply w-full h-full overflow-auto;
+                    .cm-gutters {
+                        @apply hidden;
+                    }
+                    .cm-content {
+                        @apply pl-3 pt-4;
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: .925rem;
+                        line-height: 1.375;
+                        .cm-line {
+                            @apply relative font-medium;
+                            &.cm-activeLine {
+                                @apply bg-transparent;
+                            }
+                        }
+                        .cm-matchingBracket {
+                            @apply bg-blue-500/25;
+                        }
+                        .ͼ7 {
+                            @apply no-underline;
+                            &.ͼ5 {
+                                @apply no-underline;
+                                + .ͼ7 {
+                                    @apply no-underline;
+                                }
+                            }
+                        }
+                        .ͼ6 {
+                            @apply no-underline;
+                            &.ͼc {
+                                @apply text-blue-700;
+                            }
+                        }
+                        .ͼ5 {
+                            @apply text-slate-900;
+                        }
+                        .ͼc {
+                            @apply text-slate-900;
+                        }
+                    }
+                    .cm-cursorLayer {
+                        .cm-cursor.cm-cursor-primary {
+                            @apply bg-slate-900 rounded border-none w-0.5;
+                        }
+                    }
+                    .cm-selectionLayer {
+                        .cm-selectionBackground {
+                            @apply bg-blue-500/25;
+                        }
+                    }
+                }
+            }
+            #page {
+                @apply w-full h-full overflow-auto;
+            }
+        }
+    }
 }
 #book { @apply w-full h-full; }
 #book > ol { @apply pl-3.5 pt-3; }
@@ -83,63 +131,24 @@ body {
 #book > ol span.menu > ul > li > button { @apply w-full h-6 flex items-center justify-start text-sm font-semibold whitespace-nowrap px-1 text-black; }
 #book > ol span.menu > ul > li > button:hover { @apply bg-slate-500; }
 
-#code {
-    @apply w-full h-full relative py-3 overflow-auto;
+#head {
+    @apply w-full h-full flex flex-row items-center justify-start gap-1 pl-3 pr-1.5;
 }
-#code .cm-editor { @apply w-full h-full; }
-#code .cm-editor.cm-focused.ͼ1 { @apply outline-none; }
-#code .cm-line {
-    @apply bg-transparent rounded-tr-sm rounded-br-sm text-slate-900 pl-4;
-    font-family: "JetBrains Mono", monospace;
-    font-weight: 600;
-    font-size: .8rem;
+#head button {
+    @apply flex flex-row items-center justify-start text-sm font-semibold;
 }
-#code .cm-cursor.cm-cursor-primary { }
-#code .cm-editor { }
-#code .ͼ2 .cm-activeLine { @apply bg-transparent; }
-#code .ͼ2 .cm-focused .cm-activeLine { @apply bg-transparent; }
-#code .ͼ2 .cm-gutters {
-    @apply px-2 bg-slate-100 border-none text-slate-300 select-none;
-    font-family: "JetBrains Mono", monospace;
-    font-weight: 600;
-    font-size: .8rem;
+#head button:first-of-type svg {
+    @apply h-4 fill-blue-600;
 }
-#code .cm-gutterElement span { @apply font-extrabold font-mono; }
-#code .ͼ2 .cm-activeLineGutter { @apply bg-slate-100 text-slate-300; }
-
-
-#view {
-    @apply grid w-full h-full;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
+#head button[disabled] {
+    @apply cursor-not-allowed;
 }
-#view > iframe {
-    @apply w-full h-full;
+#head button[disabled] svg {
+    @apply fill-slate-400/50;
 }
-body > .splitpanes {
-    @apply w-full h-full fixed top-0 left-0 overflow-hidden;
+#head button span {
+    @apply grid place-items-center h-full px-1.5;
 }
-body > .splitpanes.no-splitter .splitpanes__pane {
-    @apply bg-transparent;
-}
-body > .splitpanes.no-splitter .splitpanes__splitter {
-    @apply bg-transparent;
-    position: relative;
-}
-body > .splitpanes.no-splitter .splitpanes__splitter {
-    @apply bg-white border-none;
-}
-body > .splitpanes.no-splitter .splitpanes__splitter::before,
-body > .splitpanes.no-splitter .splitpanes__splitter::after,
-body > .splitpanes.no-splitter:hover .splitpanes__splitter::before,
-body > .splitpanes.no-splitter:hover .splitpanes__splitter::after {
-    @apply h-4 bg-transparent;
-}
-body > .splitpanes .splitpanes--vertical .splitpanes__splitter,
-body > .splitpanes.splitpanes--vertical .splitpanes__splitter {
-    @apply w-1;
-}
-body > .splitpanes.splitpanes--horizontal > .splitpanes__splitter,
-body > .splitpanes .splitpanes--horizontal > .splitpanes__splitter {
-    @apply h-1;
+#head button span svg {
+    @apply w-4 fill-slate-900;
 }

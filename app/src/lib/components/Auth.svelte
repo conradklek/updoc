@@ -78,7 +78,7 @@
     }
     main#auth > form > div > input {
         grid-area: input;
-        @apply block w-full px-2 py-1 text-sm font-medium rounded-sm;
+        @apply block w-full px-2 py-1 text-sm font-medium rounded-sm bg-slate-100;
     }
     main#auth > form > div > input:focus + label {
         @apply text-blue-700;
